@@ -1,0 +1,12 @@
+{
+  "venues": ["coinbase", "kraken", "gemini"],
+  "base": "xbt",
+  "quote": "usd",
+  "prefix": "",
+  "min_venues": 2,
+  "decimal_places": 8,
+  "publication_delay": 2,
+  "correction_window": 30,
+  "max_catchup": 300,
+  "retries": 5
+}

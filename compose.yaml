@@ -1,0 +1,25 @@
+services:
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "127.0.0.1:16379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
+  index:
+    build: .
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./config.example.json:/app/config.json:ro
+    command: ["run", "--config", "/app/config.json"]
+    depends_on:
+      redis:
+        condition: service_healthy
+volumes:
+  redis-data:
